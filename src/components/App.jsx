@@ -1,26 +1,19 @@
-import { Button } from './Button/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers } from 'redux/users/usersOperations';
-import { UsersList } from './UsersList/UsersList';
-import { EmailFilterUsers } from './EmailFilterUsers/EmailFilterUsers';
-import { selectUsers } from 'redux/users/usersSelectors';
+import { Route, Routes } from 'react-router-dom';
+import { UsersPage } from 'pages/UsersPage/UsersPage';
+import { HomePage } from 'pages/HomePage/HomePage';
+import { Layout } from './Layout/Layout';
+import { RegisterPage } from 'pages/RegisterPage/ReristerPage';
 
 export const App = () => {
-  const users = useSelector(selectUsers);
-  const dispatch = useDispatch();
-  const handleClick = () => {
-    dispatch(fetchUsers());
-  };
   return (
     <>
-      {users.length > 0 ? (
-        <>
-          <EmailFilterUsers />
-          <UsersList />
-        </>
-      ) : (
-        <Button text="Show users" type="button" clickHandler={handleClick} />
-      )}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="users" element={<UsersPage />} />
+        </Route>
+      </Routes>
     </>
   );
 };
